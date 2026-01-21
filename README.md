@@ -10,6 +10,10 @@ npm start
 ```
 Then open `http://localhost:3000` in your browser.
 
+## Demo link: 
+[Project Link](https://flam-hgg9.onrender.com)
+
+
 ## Test with multiple users
 
 - Open the same URL in 2+ browser windows or an incognito window.
@@ -18,7 +22,7 @@ Then open `http://localhost:3000` in your browser.
 
 ## Features
 
-- Tools: brush + eraser
+- Tools: brush + eraser + some shapes
 - Style controls: color + width
 - Real-time sync: streams points while drawing
 - Presence: online user list + user colors

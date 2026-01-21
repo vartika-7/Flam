@@ -1,9 +1,14 @@
 # ARCHITECTURE
 
-## Data Flow (drawing)
+## Data Flow
+### DFD LEVEL-0 (Context Diagram):
+<img width="814" height="275" alt="Screenshot 2026-01-21 at 23 27 43" src="https://github.com/user-attachments/assets/1352fe1f-74fe-4a9b-9c41-c0da4967906d" />
+
+### DFD LEVEL-1 (Detailed Diagram):
+<img width="1097" height="507" alt="Screenshot 2026-01-21 at 23 24 39" src="https://github.com/user-attachments/assets/28be950e-38fa-4432-8618-e562fd72e077" />
 
 1. **User draws locally**
-   - Client collects pointer points and **renders immediately** (client-side prediction).
+   - Client collects pointer points and **renders immediately** .
 2. **Client streams events over WebSocket**
    - `stroke:begin` once
    - `stroke:point` batched (RAF throttled)
@@ -57,36 +62,29 @@
 - `pong`
 
 ### Point shape
-
 `Point = { x: number, y: number, t: number, p?: number }`
 
 ## Undo/Redo Strategy (global)
 
 **Server is authoritative** for history. The room keeps:
-
 - `strokesById`: committed strokes
 - `timeline`: operations appended in server order
 - `undoneStrokeIds`: a derived set updated incrementally
 
 Operations:
-
 - `STROKE_COMMIT(strokeId)`: adds a new visible stroke
 - `UNDO(strokeId)`: marks the most recent visible committed stroke as undone
 - `REDO(strokeId)`: re-applies the most recently undone stroke
 
 ### “User A undoes User B” behavior
-
 Undo is **global**, so it simply undoes the latest visible stroke regardless of author. That’s intentional and consistent with “global undo/redo” requirements.
-
 Clients apply undo/redo by **redrawing** from the committed set excluding `undoneStrokeIds`.
 
 ## Conflict Resolution
 
 Two users drawing in the same area is not a “merge” problem: both strokes exist.
-
 - **Total order**: server append order (a single room timeline).
 - **Rendering**: strokes replay in that order; later strokes naturally appear “on top”.
-
 Undo/redo also follows that same order, so every client converges.
 
 ## Performance Decisions

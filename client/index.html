@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collaborative Canvas</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">CC</div>
+          <div class="title">
+            <div class="name">Collaborative Canvas</div>
+            <div class="sub">Real-time multi-user drawing</div>
+          </div>
+        </div>
+
+        <div class="room">
+          <div class="roomFields">
+            <label class="field">
+              <span>Room</span>
+              <input id="roomId" placeholder="lobby" />
+            </label>
+            <label class="field">
+              <span>Name</span>
+              <input id="displayName" placeholder="Your name" />
+            </label>
+          </div>
+          <div class="roomActions">
+            <button id="joinBtn" class="btn primary">Join</button>
+            <div id="connState" class="pill warn">Disconnected</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <aside class="sidebar">
+          <section class="card">
+            <div class="cardTitle">Tools</div>
+
+            <div class="toolGrid">
+              <button id="toolBrush" class="btn toggle active">Brush</button>
+              <button id="toolEraser" class="btn toggle">Eraser</button>
+              <button id="toolRect" class="btn toggle">Rect</button>
+              <button id="toolCircle" class="btn toggle">Circle</button>
+              <button id="toolText" class="btn toggle">Text</button>
+              <button id="toolImage" class="btn toggle">Image</button>
+            </div>
+            
+            <div class="controlGrid" id="imageUploadContainer" style="display: none;">
+              <label class="field">
+                <span>Upload Image</span>
+                <input id="imageUpload" type="file" accept="image/*" />
+              </label>
+            </div>
+            
+            <div class="controlGrid" id="textInputContainer" style="display: none;">
+              <label class="field">
+                <span>Text</span>
+                <input id="textInput" type="text" placeholder="Type text here..." />
+              </label>
+            </div>
+
+            <div class="controlGrid">
+              <label class="field">
+                <span>Color</span>
+                <input id="color" type="color" value="#111111" />
+              </label>
+              <label class="field">
+                <span>Width</span>
+                <input id="width" type="range" min="1" max="40" value="6" />
+              </label>
+            </div>
+
+            <div class="actionGrid">
+              <button id="undoBtn" class="btn">Undo</button>
+              <button id="redoBtn" class="btn">Redo</button>
+            </div>
+
+            <div class="hint">
+              <span class="hintTitle">Shortcuts</span>
+              <div class="hintRow"><kbd>Shift</kbd> Straight line</div>
+              <div class="hintRow"><kbd>⌘/Ctrl</kbd> + <kbd>Z</kbd> Undo (global)</div>
+              <div class="hintRow"><kbd>⌘/Ctrl</kbd> + <kbd>Y</kbd> Redo (global)</div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="cardTitle">Online</div>
+            <ul id="userList" class="users"></ul>
+          </section>
+
+          <section class="card">
+            <div class="cardTitle">Stats</div>
+            <div class="stats">
+              <div><span class="muted">Me</span><span id="meLabel">—</span></div>
+              <div><span class="muted">Room</span><span id="roomLabel">—</span></div>
+              <div><span class="muted">Latency</span><span id="latencyLabel">—</span></div>
+              <div><span class="muted">FPS</span><span id="fpsLabel">—</span></div>
+            </div>
+          </section>
+        </aside>
+
+        <section class="canvasWrap">
+          <div class="canvasStack" aria-label="Drawing canvas">
+            <canvas id="baseCanvas"></canvas>
+            <canvas id="liveCanvas"></canvas>
+            <div id="cursorLayer" class="cursorLayer"></div>
+          </div>
+          <div class="footerHint">
+            Tip: open this page in 2+ browser windows to test collaboration.
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
+
